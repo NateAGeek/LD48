@@ -34,7 +34,7 @@ class Main extends Engine
 #end
 		HXP.screen.color = kClearColor;
 		HXP.screen.scale = 1;
-//		HXP.world = new YourWorld();
+		HXP.world = new Game();
 	}
 
 	public static function main()
