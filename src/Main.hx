@@ -11,15 +11,15 @@ import com.haxepunk.HXP;
 class Main extends Engine 
 {
 
-	public static inline var kScreenWidth:Int = 640;
-	public static inline var kScreenHeight:Int = 480;
-	public static inline var kFrameRate:Int = 60;
-	public static inline var kClearColor:Int = 0x333333;
-	public static inline var kProjectName:String = "LD48Game";
+	public static inline var ScreenWidth:Int = 640;
+	public static inline var ScreenHeight:Int = 480;
+	public static inline var FrameRate:Int = 60;
+	public static inline var ClearColor:Int = 0x333333;
+	public static inline var ProjectName:String = "GameTitle";
 
 	function new()
 	{
-		super(kScreenWidth, kScreenHeight, kFrameRate, false);	
+		super(ScreenWidth, ScreenHeight, FrameRate, false);	
 	}
 
 	override public function init()
@@ -32,9 +32,9 @@ class Main extends Engine
 			HXP.console.enable();
 		}
 #end
-		HXP.screen.color = kClearColor;
+		HXP.screen.color = ClearColor;
 		HXP.screen.scale = 1;
-		HXP.world = new Game();
+		HXP.scene = new Game();
 	}
 
 	public static function main()

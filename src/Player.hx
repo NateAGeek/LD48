@@ -15,8 +15,12 @@ import flash.geom.Point;
 class Player extends Entity
 {
 
+	//-----------Set all the varibles as globals-------------
+	
+	//SpriteMaps are what store the images that can contain multiple frams for animation
 	var sprite:Spritemap;
 	
+	//Player Image Prop
 	var scale:Int = 2;
 	var Width:Int = 32;
 	var Height:Int = 32;
@@ -25,9 +29,12 @@ class Player extends Entity
 	var xOffSet:Int = 0;
 	var yOffSet:Int = 0;
 	
+	//Check stuff for jumping
 	var onGround:Bool = false;
+	//Can move is like pause(might even want to change the var name)...
 	var canMove:Bool = true;
 	
+	//Physics stuff
 	var Movspeed:Float;
 	var vel:Point;
 	var acc:Point;
@@ -36,35 +43,48 @@ class Player extends Entity
 	public function new(x:Int, y:Int, grav:Int, speed:Float) {
 		super(x, y);
 		
+		//Gotta go fast
 		Movspeed = speed;
 		
+		//Some Physics stuff, vel, acc, grav, etc
 		mov = new Point();
 		vel = new Point();
 		acc = new Point();
 		
 		acc.y = grav;
 		
+		//Allows progtammer to set strings as keys
 		Input.define("right", [Key.RIGHT, Key.D]);
 		Input.define("left", [Key.LEFT, Key.A]);
 		Input.define("up", [Key.UP, Key.W]);
 		Input.define("down", [Key.DOWN, Key.S]);
 		Input.define("space", [Key.SPACE]);
 		
+		//Load the Sprite from image
 		sprite = new Spritemap("gfx/Entities/Player.png", 32, 32);
 		
+		//the add method, is used to add animation (animationName(String), frames[array], speed int)
 		sprite.add("stand", [0], 1);
 		
+		//scale for the sprite
 		sprite.scale = scale;
+		
+		//Sets the graphics(from the Entity class that this extends). All things that want to be drawn have to have this set
 		graphic = sprite;
 		
+		//Makes a hit box
 		setHitbox(Width*scale, Height*scale, -(xOffSet*scale), -(yOffSet*scale));
 		
+		//The layer the image is on
 		layer = 1;
 		
+		//This is like an ID for this type of object.
 		type = "Player";
 	}
 	
 	public override function update() {
+		
+		trace(collide("Level", x, y));
 		
 		updateCollision();
 		updateMove();
@@ -87,7 +107,7 @@ class Player extends Entity
 			}else {
 				if (Input.check("right")) {
 					mov.x++;
-					sprite.play(inv+"falling_right");
+					sprite.play("falling_right");
 				}
 				if (Input.check("left")) {
 					mov.x--;
@@ -164,10 +184,6 @@ class Player extends Entity
 		return Height;
 	}
 	
-	public function getHealth() {
-		return Health;
-	}
-
 	public function getcanMove() {
 		return canMove;
 	}
@@ -182,10 +198,6 @@ class Player extends Entity
 	
 	public function setGrav(g:Int) {
 		acc.y = g;
-	}
-	
-	public function setHealth(h:Int) {
-		Health = h;
 	}
 	
 	public function setcanMove(move:Bool) {
