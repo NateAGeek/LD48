@@ -14,14 +14,14 @@ class Game extends Scene
 	public function new() {
 		super();
 		
-		Level = new Level_Manager(0, this);
-		
 	}
 	
 	public override function begin() {
 		super.begin();
 		
+		Level = new Level_Manager(0);
 		add(Level);
+		
 	}
 	
 	public override function update() {

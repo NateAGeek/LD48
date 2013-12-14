@@ -73,7 +73,7 @@
         <Y>1</Y>
       </ScrollFactor>
       <Color A="255" R="255" G="255" B="255" />
-      <ExportMode>Rectangles</ExportMode>
+      <ExportMode>GridRectangles</ExportMode>
     </LayerDefinition>
     <LayerDefinition xsi:type="EntityLayerDefinition">
       <Name>Entities</Name>

@@ -4,7 +4,6 @@ import com.haxepunk.graphics.Graphiclist;
 import com.haxepunk.graphics.Tilemap;
 import com.haxepunk.masks.Grid;
 import com.haxepunk.HXP;
-import com.haxepunk.Scene;
 import com.haxepunk.tweens.misc.VarTween;
 import haxe.xml.Fast;
 import openfl.Assets;
@@ -33,12 +32,8 @@ class Level_Manager extends Entity {
 	var Gravity:Int = 1;
 	var Speed:Float = 1.0;
 	
-	var Scene_Ref:Scene;
-	
-	public function new(Level:Int, Scene_Ref:Scene) {
+	public function new(Level:Int) {
 		super(0 ,0);
-		
-		this.Scene_Ref = Scene_Ref;
 		
 		this.Level = Level;
 		LoadLevel(Level);
@@ -49,11 +44,11 @@ class Level_Manager extends Entity {
 		BackgroundTiles.Set_PlayerRef(player);
 		BackgroundTiles.Set_Map_W_H(MapWidth, MapHeight);
 		
-		Scene_Ref.add(player);
+		HXP.scene.add(player);
 		
 		Cam = new Camera(MapWidth, MapHeight, player.getX(), player.getY(), player.getWidth(), player.getHeight());
 		
-		layer = 1;
+		layer = 4;
 		
 		type = "Level";
 		
@@ -71,9 +66,9 @@ class Level_Manager extends Entity {
 		MiddlegroundTiles = new Level_Middleground(Level);
 		BackgroundTiles = new Level_Background(Level);
 		
-		Scene_Ref.add(BackgroundTiles);
-		Scene_Ref.add(MiddlegroundTiles);
-		Scene_Ref.add(ForegroundTiles);
+		HXP.scene.add(BackgroundTiles);
+		HXP.scene.add(MiddlegroundTiles);
+		HXP.scene.add(ForegroundTiles);
 		
 		var root = new Fast(Xml.parse(Assets.getText("levels/" + Level + "/level.oel")).firstElement());
 		
@@ -86,7 +81,6 @@ class Level_Manager extends Entity {
 		var EntitesXML = root.node.Entities;
 		
 		for (Collision in CollisionXML.elements) {
-			trace("X: " + Collision.att.x + " Y:" + Collision.att.y+" width:"+Collision.att.w+" Height:"+Collision.att.h);
 			MapGrid.setRect(Std.int(Std.parseInt(Collision.att.x)), Std.int(Std.parseInt(Collision.att.y)), Std.int(Std.parseInt(Collision.att.w)), Std.int(Std.parseInt(Collision.att.h)), true);
 		}
 		
